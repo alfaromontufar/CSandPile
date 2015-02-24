@@ -1,0 +1,290 @@
+\documentclass{article}
+\usepackage{amsthm}
+\usepackage{amsmath}%,txfonts,cmbright}
+\usepackage{enumerate}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[left=3cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}
+%\usepackage{fancyhdr}
+\usepackage{color}
+%\usepackage{lettrine}
+\usepackage{calc,pifont}
+\usepackage[noindentafter,calcwidth]{titlesec}
+%\usepackage[Sonny]{fncychap}
+\usepackage{multirow}
+
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+
+\setlength{\headheight}{13pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%% FORMATOS PARA LAS SECCIONES Y SUBSECCIONES %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\titleformat{\section}[display]
+%{\Large\filright\sffamily\bfseries}{\titleline[1]{}}{0ex}{\thesection
+%\hspace{.3cm}}
+%\titlespacing{\section}{2pc}{*2}{*4}
+
+%\newcommand{\Section}[1]
+%{
+%	\addtocounter{section}{1}
+%	\section*{#1}
+%	\fancyhead[LO]{\sf Section \thesection. #1}
+%	\addcontentsline{toc}{section}{\thesection \hspace{.3cm} #1}
+%	\setcounter{subsection}{0}
+%}
+
+%\titleformat{\subsection}[display]
+%{\large\filright\sffamily} {\titleline[l]{}}{0ex}{\thesubsection \hspace{.3cm}}
+%\titlespacing{\subsection}{2pc}{*2}{*4}
+
+%\newcommand{\Subsection}[1]
+%{
+%	\addtocounter{subsection}{1}
+%	\subsection*{#1}
+%	\addcontentsline{toc}{subsection}{\thesubsection \hspace{.3cm} #1}
+%	\setcounter{subsubsection}{0}
+%}
+
+%\titleformat{\subsubsection}[display]
+%{\large\filright\sffamily} {\titleline[l]{}}{0ex}{\thesubsubsection \hspace{.3cm}}
+%\titlespacing{\subsubsection}{2pc}{*2}{*4}
+
+%\newcommand{\Subsubsection}[1]
+%{
+%	\addtocounter{subsubsection}{1}
+%	\subsubsection*{#1}
+%	\addcontentsline{toc}{subsubsection}{\thesubsubsection \hspace{.3cm} #1}
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% FORMATOS PARA LOS TEOREMAS, LEMAS, ETC %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheorem{Theorem}{Theorem} 
+\newtheorem{Definition}[Theorem]{Definition} 
+\newtheorem{Lemma}[Theorem]{Lemma} 
+\newtheorem{Corollary}[Theorem]{Corollary} 
+\newtheorem{Conjecture}[Theorem]{Conjecture} 
+\newtheorem{Remark}[Theorem]{Remark} 
+\newtheorem{Example}[Theorem]{Example\/} 
+\newtheorem{Algorithm}[Theorem]{Algorithm} 
+\newtheorem{Proposition}[Theorem]{Proposition} 
+\newtheorem{Claim}[Theorem]{Claim} 
+\newtheorem{Problem}[Theorem]{Problem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Code}[1]
+{
+	\begin{center}
+		\tikz \draw (0,0) node[fill=black!15,text width=13cm]
+		{\texttt{#1}};
+	\end{center}
+}
+\renewcommand{\familydefault}{\sfdefault} 
+\renewcommand{\sfdefault}{cmbr}
+\newcommand{\Ker}{\textsf{Ker}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeindex
+
+\title{{\it CSandPile 0.5's Manual}}
+\author{Carlos A. Alfaro \& Carlos E. Valencia}
+\date{}
+
+\begin{document}
+\maketitle
+
+This document describes the version $0.5$ of the program {\it CSandPile}, a program that allows to compute the sandpile group of a symmetric multidigraph $G$.
+The {\it CSandPile} program was programmed in C++ language using the GNU Compiler Collection and had been used over Windows XP, MAC OS 10.5.8 and Ubuntu Linux 9.04.
+
+%We developed a computer program called {\it CSandPile}, because we want to understand the 
+%combinatorial structure of the recurrent configurations of the sandpile group of a symmetric multidigraph  $G$, an important part of this thesis.
+%This program is oriented to explote the combinatorial structure of the sandpile group of $G$.
+The {\it CSandPile} program version $0.5$ is mainly a tool for compute the group operations of the recurrent representatives of non-negative configurations of $G$, 
+that is, is the first effort to find the combinatorial structure of the group operations of the recurrent configurations that generate the sandpile group of $G$.
+
+If $c$ be a non-negative configuration, then using {\it CSandPile}, one may compute the following:
+\begin{itemize}
+	\item the stabilization of $c$,
+	\item the recurrent representative of $c$,
+	\item the powers of  a recurrent configuration,
+	\item the representative  of the inverse of a recurrent configuration $c$,
+	\item the recurrent representative of the identity of the sandpile group of $G$, 
+	\item the determinant of the Laplacian matrix of $G$,
+	\item the powers of the representative of the canonical base.	
+\end{itemize}
+
+\section{The structure of {\it CSandPile}}
+
+{\it CSandPile}consists of the file \texttt{csandpile.exe} the executable file if you are using a Windows environment, or \texttt{csandpile.out} the executable file if you are using a UNIX environment.
+Also, you need to have an input file \texttt{<my project>.gph}  with the input data.
+
+\subsection{The input file}
+The input file \texttt{<my project>.gph}  is structured as follows: 
+The first line contains the order of the Laplacian matrix of $G$, the next lines contain the rows of the Laplacian matrix of $G$, 
+the next line contain the vertex of $G$ that will play the role of the sink, 
+and finally the last line contains some configuration. 
+\begin{Example}\label{exa1}
+Let $G$ be the cycle $C_4$ with four vertices, therefore the Laplacian matrix of $C_4$ is given by:
+\[
+	L(C_4)=
+	\left[
+	\begin{array}{cccc}
+		2 & -1 & 0 & -1\\
+		-1 & 2 & -1 & 0\\
+		0 & -1 & 2 & -1\\
+		-1 & 0 & -1 & 2\\ 
+	\end{array}
+	\right]
+\]
+
+The file called ``c4.gph" has the order of the Laplacian matrix of $C_4$, the Laplacian matrix of $C_4$, the vertex $4$ as a sink and the vector $(2,2,1,0)$ as the configuration.
+\Code{4 \\
+2 -1 0 -1\\
+-1 2 -1 0\\
+0 -1 2 -1\\
+-1 0 -1 2\\
+4\\
+2 2 1 0\\
+}
+
+If we do not write a configuration, the configuration $\sigma_{MAX}=(\deg(1)-1, \deg(2)-1,...,\deg(n)-1)$ will be taken by default. 
+%In the before example, the configuration $(1,1,1,1)$ would be taken.
+\end{Example}
+
+\subsection{Running {\it CSandPile}}
+
+The files \texttt{csandpile.exe} and \texttt{csandpile.out} are the executables files in Windows and UNIX, respectively. 
+You must run it from the console of your operating system. 
+The syntax for calling {\it CSandPile} is
+\[
+\texttt{csandpile <my project> [-option]}
+\]
+where -option can be one of the following options: 
+\Code{%Write, after of the executable file, one of the following options:\\
+-s \hspace{1.63cm} to obtain the stable configuration\\
+-p \hspace{1.64cm} to obtain the powers of the recurrent configuration\\
+-i \hspace{1.65cm} to obtain the identity\\
+-r \hspace{1.66cm} to obtain the recurrent configuration\\
+-ri \hspace{1.49cm} to obtain the inverse recurrent configuration\\
+-det \hspace{1.33cm} to obtain the determinant of the reduced Laplacian matrix\\
+-group \hspace{.94cm} to obtain the powers of the standard base\\
+-complete n \hspace{.1cm} to create the Laplacian matrix of the complete graph of n\\
+\hspace{2.2cm} vertices\\
+-path n \hspace{.9cm} to create the Laplacian matrix of the path of n vertices\\
+-cycle n \hspace{.74cm} to create the Laplacian matrix of the cycle of n vertices\\
+}
+
+When you type and execute \texttt{csandpile} or \texttt{./csandpile.out} if you are working in a UNIX environment on the console, 
+the program creates a file called \texttt{<my project>.csp}. %that its contains the following information:
+
+%To execute an option you need to type the executable file followed by the option that you want.
+For instance, if you want to obtain the stable configuration, you need to type 
+\[
+\texttt{csandpile <my project> -s} \text{ or } \texttt{./csandpile.out <my project> -s}. 
+\]
+and {\it CSandPile} will create a file called \texttt{<my project>.csp}.
+Thus, using ``c4.gph" as an input file, the file \texttt{c4.csp} contains the following information:
+%For instance, if you executed the option to obtain the stable configuration, the \texttt{csandpile.csp} file contains
+
+\Code{The stable configuration of\\
+2 2 1 S\\
+is\\
+0 1 1 S\\
+}
+Note that we put a \texttt{S} in the coordinate of the sink.
+
+
+To obtain the powers of a recurrent configuration, you need to type \texttt{-p} as option. 
+Using ``c4.gph" as an input file, the \texttt{c4.csp} file contains
+
+\Code{Checking configuration:  0 1 1 S\\
+Powers\\
+1 -  0 1 1 S\\
+2 -  1 1 1 S\\
+3 -  1 1 0 S\\
+4 -  1 0 1 S\\
+}
+
+To obtain the identity configuration, you need to type \texttt{-i} as an option. 
+Using ``c4.gph" as an input file, the \texttt{c4.csp} file contains
+
+\Code{Identity:  1 0 1 S\\
+}
+
+To obtain the recurrent configuration of the configuration given in the \texttt{<my project>.gph}, you need to type \texttt{-r} as option. 
+Using ``c4.gph" as an input file, the \texttt{c4.csp} file contains
+
+\Code{The recurrent configuration of  2 2 1 S\\
+is 0 1 1 S\\
+}
+
+To obtain the recurrent inverse configuration of the configuration given in the \texttt{<my project>.gph}, you need to type \texttt{-ri} as option. 
+Using ``c4.gph" as an input file, the file \texttt{c4.csp} contains
+
+\Code{Inverse recurrent configuration:  1 1 0 S\\
+}
+
+To obtain the determinant of the reduced Laplacian matrix, you need to type \texttt{-det} as option. 
+Using ``c4.gph" as an input file, the \texttt{c4.csp} file contains
+
+\Code{Determinant: 4\\
+}
+
+To obtain the powers of the canonical base, you need to type \texttt{-group} as option. 
+Using ``c4.gph" as an input file, the \texttt{c4.csp} file contains
+
+\Code{Generator 1:  1 0 0 S\\
+ Checking configuration:  0 1 1 S\\
+ Powers\\
+1 -  0 1 1 S\\
+2 -  1 1 1 S\\
+3 -  1 1 0 S\\
+4 -  1 0 1 S\\
+\medskip
+ Generator 2:  0 1 0 S\\
+ Checking configuration:  1 1 1 S\\
+ Powers\\
+1 -  1 1 1 S\\
+2 -  1 0 1 S\\
+\medskip
+ Generator 3:  0 0 1 S\\
+ Checking configuration:  1 1 0 S\\
+ Powers\\
+1 -  1 1 0 S\\
+2 -  1 1 1 S\\
+3 -  0 1 1 S\\
+4 -  1 0 1 S\\
+}
+
+\subsection{Some special graphs}
+
+Also, {\it CSandPile}  can generate the Laplacian matrix of the complete graph of $n$ vertices, 
+the path of $n$ vertices and the cycle of $n$ vertices and write it in the \texttt{<my project>.gph} file.
+This can be done by typing \texttt{-complete \textit{n}}, \texttt{-cycle \textit{n}} or \texttt{-path \textit{n}} as an option, respectively.
+For instance, if you write 
+\[
+\texttt{csandpile k4 -complete 4}
+\]
+you will obtain the Laplacian matrix of the complete graph of 4 vertices in the \texttt{k4.gph} file.
+
+\Code{4\\
+3 -1 -1 -1\\
+-1 3 -1 -1\\
+-1 -1 3 -1\\
+-1 -1 -1 3\\
+4\\
+}
+
+Note that  by default, {\it CSandPile} will define the vertex \textit{n} as the sink.
+\end{document}
